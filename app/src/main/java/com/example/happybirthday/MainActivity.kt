@@ -4,15 +4,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,16 +32,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HappyBirthdayTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 //                    Greeting(
 //                        name = "Abhishek",
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                    GreetingText(
-                        message = "Happy Birthday Abhishek!",
-                        from = "from Akash",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+//                    GreetingText(
+//                        message = "Happy Birthday Abhishek!",
+//                        from = "from Akash",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+                        GreetingImage(
+                            message = "Happy Birthday Abhishek!",
+                            from = "from Akash",
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
+
                 }
             }
         }
@@ -51,16 +69,30 @@ class MainActivity : ComponentActivity() {
 //}
 
 @Composable
-fun GreetingText(message: String,from: String, modifier: Modifier = Modifier) {
+fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) {
+    val image = painterResource(R.drawable.androidparty)
+    Box(modifier) {
+        Image(
+            painter = image,
+            contentDescription = "Birthday background Image",
+//            to maximize the background in the app
+            contentScale = ContentScale.Crop,
+//            For changing opacity of the background image
+//            alpha = 0.5F
+        )
+    }
+
     Column(verticalArrangement = Arrangement.Center,
         modifier = modifier.padding(8.dp)
-    ) {
+    )
+    {
         Text(
             text = message,
             modifier = modifier,
             fontSize = 80.sp,
             lineHeight = 116.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Color.Black
 
         )
         Text(
@@ -68,10 +100,35 @@ fun GreetingText(message: String,from: String, modifier: Modifier = Modifier) {
             fontSize = 35.sp,
             modifier = Modifier
                 .padding(16.dp)
-                .align(alignment = Alignment.End)
+                .align(alignment = Alignment.End),
+            color = Color.Black
         )
     }
 }
+
+
+//@Composable
+//fun GreetingText(message: String,from: String, modifier: Modifier = Modifier) {
+//    Column(verticalArrangement = Arrangement.Center,
+//        modifier = modifier.padding(8.dp)
+//    ) {
+//        Text(
+//            text = message,
+//            modifier = modifier,
+//            fontSize = 80.sp,
+//            lineHeight = 116.sp,
+//            textAlign = TextAlign.Center
+//
+//        )
+//        Text(
+//            text = from,
+//            fontSize = 35.sp,
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .align(alignment = Alignment.End)
+//        )
+//    }
+//}
 
 @Preview(
     showBackground = true
@@ -80,7 +137,11 @@ fun GreetingText(message: String,from: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     HappyBirthdayTheme {
 //        Greeting("Abhishek")
-        GreetingText(
+//        GreetingText(
+//            message = "Happy Birthday Abhishek!",
+//            from = "from Akash"
+//        )
+        GreetingImage(
             message = "Happy Birthday Abhishek!",
             from = "from Akash"
         )
